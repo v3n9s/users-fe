@@ -1,7 +1,10 @@
 {
   "name": "users-fe",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "dev": "webpack serve --env ISDEV",
+    "build": "webpack"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
     "@types/node": "^18.6.3",
