@@ -8,7 +8,7 @@ const AuthForm: React.FC = () => {
 
   return (
     <Container className='border rounded mt-2' style={{maxWidth: 425}}>
-      { isLogin ? <LoginForm /> : <RegistrationForm /> }
+      { isLogin ? <LoginForm setIsLogin={setIsLogin} /> : <RegistrationForm setIsLogin={setIsLogin} /> }
     </Container>
   );
 }
