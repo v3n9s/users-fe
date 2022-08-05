@@ -6,6 +6,8 @@ import {
   updateUser as updateUserApi
 } from '../services/users';
 import { User, UserIsChecked } from '../types/user';
+import { showAlert } from './alertsSlice';
+import { removeUser } from './userSlice';
 
 const initialState: UserIsChecked[] = [];
 
@@ -23,6 +25,13 @@ export const blockCheckedUsers = createAsyncThunk(
     getCheckedUsersSelector(store.getState()).forEach(async ({ id }) => {
       if (await updateUserApi(id, { isBlocked: true })) {
         thunkAPI.dispatch(updateUser({ id, isBlocked: true }));
+        if (id === store.getState().user.id) {
+          thunkAPI.dispatch(removeUser());
+          thunkAPI.dispatch(showAlert({
+            text: 'Your account was blocked',
+            variant: 'danger'
+          }));
+        }
       }
     });
   }
@@ -45,6 +54,13 @@ export const deleteCheckedUsers = createAsyncThunk(
     getCheckedUsersSelector(store.getState()).forEach(async ({ id }) => {
       if (await deleteUserApi(id)) {
         thunkAPI.dispatch(deleteUser(id));
+        if (id === store.getState().user.id) {
+          thunkAPI.dispatch(removeUser());
+          thunkAPI.dispatch(showAlert({
+            text: 'Your account was deleted',
+            variant: 'danger'
+          }));
+        }
       }
     });
   }
