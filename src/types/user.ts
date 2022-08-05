@@ -2,7 +2,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  registrationDate: Date;
-  lastLoginDate: Date | null;
+  registrationDate: string;
+  lastLoginDate: string | null;
   isBlocked: boolean;
 }
