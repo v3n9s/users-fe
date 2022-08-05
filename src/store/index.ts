@@ -12,11 +12,9 @@ export const store = configureStore({
 });
 
 store.subscribe(() => {
-  const token = store.getState().user.token;
-  if (token) {
-    localStorage.setItem('userToken', token);
-  } else {
-    localStorage.removeItem('userToken');
+  const { user } = store.getState();
+  if (user) {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 });
 

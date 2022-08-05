@@ -1,7 +1,7 @@
 import { AxiosError, AxiosInstance } from 'axios';
 import { store } from '../store';
 import { showAlert } from '../store/alertsSlice';
-import { setUserToken } from '../store/userSlice';
+import { removeUser } from '../store/userSlice';
 
 export const addInterceptors = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.response.use((res) => {
@@ -14,7 +14,7 @@ export const addInterceptors = (axiosInstance: AxiosInstance) => {
       store.dispatch(showAlert({ text: (<any>error.response!.data).message, variant: 'danger' }))
     }
     if (error.response?.status === 401) {
-      store.dispatch(setUserToken(''));
+      store.dispatch(removeUser());
     }
     return error.response;
   });

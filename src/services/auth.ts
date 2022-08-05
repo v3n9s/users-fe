@@ -8,7 +8,10 @@ export const registerUser = async (
 }
 
 export const loginUser = async (user: { name: string, password: string }) => {
-  const res = await getAxiosInstance().post('/login', user);
-  if (res.status === 201) return <string>res.data.token;
+  const res = await getAxiosInstance().post<{
+    token: string;
+    id: number;
+  }>('/login', user);
+  if (res.status === 201) return res.data;
   return false;
 }

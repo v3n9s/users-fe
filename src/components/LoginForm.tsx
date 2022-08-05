@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useAppDispatch } from '../hooks';
 import { showAlert } from '../store/alertsSlice';
 import { loginUser } from '../services/auth';
-import { setUserToken } from '../store/userSlice';
+import { setUser } from '../store/userSlice';
 
 const LoginForm: React.FC<{
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,14 +26,14 @@ const LoginForm: React.FC<{
         }));
       } else {
         setIsLoading(true);
-        const token = await loginUser(values);
+        const data = await loginUser(values);
         setIsLoading(false);
-        if (token) {
+        if (data && data.token && data.id) {
           dispatch(showAlert({
             text: 'Successfully logged in',
             variant: 'success'
           }));
-          dispatch(setUserToken(token));
+          dispatch(setUser(data));
         }
       }
     }

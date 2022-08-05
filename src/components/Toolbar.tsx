@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, Container } from 'react-bootstrap';
 import { useAppDispatch } from '../hooks';
 import { showAlert } from '../store/alertsSlice';
-import { setUserToken } from '../store/userSlice';
+import { removeUser } from '../store/userSlice';
 import {
   blockCheckedUsers,
   deleteCheckedUsers,
@@ -13,7 +13,7 @@ const Toolbar: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const logout = () => {
-    dispatch(setUserToken(''));
+    dispatch(removeUser());
     dispatch(showAlert({ text: 'Successfully logged out' }));
   }
 

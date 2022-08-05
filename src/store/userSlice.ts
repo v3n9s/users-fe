@@ -3,25 +3,31 @@ import { RootState } from '../store';
 
 interface UserInitialState {
   token: string;
+  id: number | null;
 }
 
-const token = localStorage.getItem('userToken');
+const user = JSON.parse(localStorage.getItem('user') || '{}');
 
 const initialState: UserInitialState = {
-  token: token ? token : ''
+  token: user.token ? user.token : '',
+  id: user.id ? +user.id : null
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload || '';
+    setUser: (state, action: PayloadAction<UserInitialState>) => {
+      return action.payload;
+    },
+    removeUser: (state) => {
+      state.token = '';
+      state.id = null;
     }
   }
 });
 
-export const { setUserToken } = userSlice.actions;
+export const { setUser, removeUser } = userSlice.actions;
 
 export const isLoggedInSelector = (state: RootState) => !!state.user.token;
 
