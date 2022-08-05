@@ -6,3 +6,7 @@ export interface User {
   lastLoginDate: string | null;
   isBlocked: boolean;
 }
+
+export interface UserIsChecked extends User {
+  isChecked: boolean;
+}
