@@ -4,7 +4,12 @@ import { showAlert } from '../store/alertsSlice';
 import { setUserToken } from '../store/userSlice';
 
 export const addInterceptors = (axiosInstance: AxiosInstance) => {
-  axiosInstance.interceptors.response.use((res) => res, (error: AxiosError) => {
+  axiosInstance.interceptors.response.use((res) => {
+    if (res.data?.message) {
+      store.dispatch(showAlert({ text: res.data.message }));
+    }
+    return res;
+  }, (error: AxiosError) => {
     if ((<any>error.response?.data)?.message) {
       store.dispatch(showAlert({ text: (<any>error.response!.data).message, variant: 'danger' }))
     }
